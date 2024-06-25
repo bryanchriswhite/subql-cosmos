@@ -237,8 +237,8 @@ export class CosmosSafeClient
 {
   height: number;
 
-  constructor(tmClient: Comet38Client, height: number) {
-    super(tmClient);
+  constructor(cometClient: Comet38Client, height: number) {
+    super(cometClient);
     this.height = height;
   }
 
@@ -268,7 +268,7 @@ export class CosmosSafeClient
     ).validators;
   }
 
-  async searchTx(query: SearchTxQuery): Promise<IndexedTx[]> {
+  async searchTx(query: string): Promise<IndexedTx[]> {
     const txs: IndexedTx[] = await this.safeTxsQuery(
       `tx.height=${this.height}`,
     );

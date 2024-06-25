@@ -9,7 +9,7 @@ import { gzipSync } from 'zlib';
 import { JsonRpcSuccessResponse } from '@cosmjs/json-rpc';
 import { GeneratedType, Registry } from '@cosmjs/proto-signing';
 import { defaultRegistryTypes } from '@cosmjs/stargate';
-import { Tendermint37Client } from '@cosmjs/tendermint-rpc';
+import { Comet38Client } from '@cosmjs/tendermint-rpc';
 import {
   BlockResponse,
   BlockResultsResponse,
@@ -55,7 +55,7 @@ const KYVE_CHAINID = 'kyve-1';
 jest.setTimeout(100000);
 describe('KyveApi', () => {
   let kyveApi: KyveApi;
-  let tendermint: Tendermint37Client;
+  let tendermint: Comet38Client;
   let registry: Registry;
 
   let tmpPath: string;
@@ -82,7 +82,7 @@ describe('KyveApi', () => {
       300,
     );
     const client = new HttpClient('https://rpc.mainnet.archway.io:443');
-    tendermint = await Tendermint37Client.create(client);
+    tendermint = await Comet38Client.create(client);
   });
 
   beforeEach(async () => {

@@ -3,7 +3,7 @@
 
 import { Registry } from '@cosmjs/proto-signing';
 import { HttpEndpoint } from '@cosmjs/stargate';
-import { Tendermint37Client } from '@cosmjs/tendermint-rpc';
+import { Comet38Client } from '@cosmjs/tendermint-rpc';
 import {
   IBlock,
   ApiConnectionError,
@@ -37,7 +37,7 @@ export class CosmosClientConnection
       IBlock<BlockContent>[]
     >
 {
-  private tmClient: Tendermint37Client;
+  private tmClient: Comet38Client;
   private registry: Registry;
   readonly networkMeta: NetworkMetadataPayload;
 
@@ -75,7 +75,7 @@ export class CosmosClientConnection
           })
         : new HttpClient(httpEndpoint);
 
-    const tendermint = await Tendermint37Client.create(rpcClient);
+    const tendermint = await Comet38Client.create(rpcClient);
 
     const api = new CosmosClient(tendermint, registry);
 
@@ -96,7 +96,7 @@ export class CosmosClientConnection
     return new CosmosSafeClient(this.tmClient, height);
   }
 
-  private setTmClient(tmClient: Tendermint37Client): void {
+  private setTmClient(tmClient: Comet38Client): void {
     this.tmClient = tmClient;
   }
 

@@ -8,7 +8,7 @@ import {
   DecodedTxRaw,
 } from '@cosmjs/proto-signing';
 import { defaultRegistryTypes } from '@cosmjs/stargate';
-import { Tendermint37Client } from '@cosmjs/tendermint-rpc';
+import { Comet38Client } from '@cosmjs/tendermint-rpc';
 import {
   CosmosMessageFilter,
   CosmosBlock,
@@ -88,7 +88,7 @@ describe('CosmosUtils', () => {
 
   beforeAll(async () => {
     const client = new HttpClient(ENDPOINT);
-    const tendermint = await Tendermint37Client.create(client);
+    const tendermint = await Comet38Client.create(client);
     const wasmTypes: ReadonlyArray<[string, GeneratedType]> = [
       ['/cosmwasm.wasm.v1.MsgClearAdmin', MsgClearAdmin],
       ['/cosmwasm.wasm.v1.MsgExecuteContract', MsgExecuteContract],

@@ -3,9 +3,8 @@
 
 import {CosmWasmClient} from '@cosmjs/cosmwasm-stargate';
 import {DecodedTxRaw} from '@cosmjs/proto-signing';
-import {Event} from '@cosmjs/stargate';
 import {Log} from '@cosmjs/stargate/build/logs';
-import {Validator, TxData, Block, BlockId, Header} from '@cosmjs/tendermint-rpc/build/tendermint37';
+import {Validator, TxData, Block, BlockId, Header, Event} from '@cosmjs/tendermint-rpc/build/comet38';
 import Long from 'long';
 
 export interface CosmWasmSafeClient extends CosmWasmClient {
