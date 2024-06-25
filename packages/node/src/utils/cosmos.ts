@@ -326,41 +326,48 @@ export function wrapEvent(
   registry: Registry,
   idxOffset: number, //use this offset to avoid clash with idx of begin block events
 ): CosmosEvent[] {
-  const events: CosmosEvent[] = [];
+  let cosmosEvents: CosmosEvent[];
+
   for (const tx of txs) {
-    let logs: Log[];
+    let txEvents;
     try {
-      logs = parseRawLog(tx.tx.log) as Log[];
-    } catch (e) {
+      txEvents = tx.tx.events
+    }
+    catch (e) {
       //parsing fails if transaction had failed.
       logger.debug('Failed to parse raw log, most likely a failed transaction');
-      continue;
+      return cosmosEvents;
     }
-    for (const log of logs) {
-      let msg: CosmosMessage;
+    for (const txEvent of txEvents) {
+      let msg;
       try {
-        msg = wrapCosmosMsg(block, tx, log.msg_index, registry);
-      } catch (e) {
+        const eventMsgIndex = txEvent.attributes.filter(
+          (attr) => attr.key === 'msg_index'
+        )[0].value;
+        msg = wrapCosmosMsg(block, tx, eventMsgIndex, registry);
+      }
+      catch (e) {
         // Example where this can happen https://sei.explorers.guru/transaction/8D4CA68E917E15652E10CB960DE604AEEB1B183D6E94A85E9CD98403F15550B7
-        logger.warn(
-          `Unable to find message for event. tx=${tx.hash} messageIdx=${log.msg_index}`,
-        );
+        // logger.warn(`Unable to find message for event. tx=${tx.hash} messageIdx=${txEvent.msg_index}`);
+        return cosmosEvents;
       }
-      for (let i = 0; i < log.events.length; i++) {
-        const event: CosmosEvent = {
-          idx: idxOffset++,
-          msg,
-          tx,
-          block,
-          log,
-          event: log.events[i],
-        };
-        events.push(event);
-      }
+      const cosmosEvent: CosmosEvent = {
+        idx: idxOffset++,
+        msg,
+        tx,
+        block,
+        log: {
+          msg_index: msg.idx,
+          log: txEvent.log,
+          events: txEvent.events,
+        },
+        event: txEvent,
+      };
+      cosmosEvents.push(cosmosEvent);
     }
   }
+  return cosmosEvents;
 
-  return events;
 }
 
 /*

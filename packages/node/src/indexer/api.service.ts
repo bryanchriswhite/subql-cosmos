@@ -7,7 +7,7 @@ import { Uint53 } from '@cosmjs/math';
 import { GeneratedType, Registry } from '@cosmjs/proto-signing';
 import { Block, defaultRegistryTypes, SearchTxQuery } from '@cosmjs/stargate';
 import {
-  Tendermint37Client,
+  Comet38Client,
   toRfc3339WithNanoseconds,
 } from '@cosmjs/tendermint-rpc';
 import {
@@ -188,7 +188,7 @@ export class ApiService
 
 export class CosmosClient extends CosmWasmClient {
   constructor(
-    private readonly tendermintClient: Tendermint37Client,
+    private readonly tendermintClient: Comet38Client,
     public registry: Registry,
   ) {
     super(tendermintClient);
@@ -237,7 +237,7 @@ export class CosmosSafeClient
 {
   height: number;
 
-  constructor(tmClient: Tendermint37Client, height: number) {
+  constructor(tmClient: Comet38Client, height: number) {
     super(tmClient);
     this.height = height;
   }
