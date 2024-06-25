@@ -19,9 +19,9 @@
     "subql-node-cosmos": "./bin/run"
   },
   "dependencies": {
-    "@cosmjs/cosmwasm-stargate": "^0.32.3",
-    "@cosmjs/proto-signing": "^0.32.3",
-    "@cosmjs/stargate": "^0.32.3",
+    "@cosmjs/cosmwasm-stargate": "workspace:*",
+    "@cosmjs/proto-signing": "workspace:*",
+    "@cosmjs/stargate": "workspace:*",
     "@kyvejs/protocol": "^1.0.12",
     "@kyvejs/sdk": "^1.1.1",
     "@nestjs/common": "^9.4.0",
