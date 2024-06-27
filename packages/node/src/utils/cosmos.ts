@@ -324,7 +324,7 @@ export function wrapEvent(
   registry: Registry,
   idxOffset: number, //use this offset to avoid clash with idx of begin block events
 ): CosmosEvent[] {
-  let cosmosEvents: CosmosEvent[];
+  let cosmosEvents: CosmosEvent[] = [];
 
   for (const tx of txs) {
     let txEvents;
